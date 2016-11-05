@@ -10,8 +10,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="project.yen.yichun.todoapp.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/activity_main_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/activity_main_btn_add"
+            android:hint="@string/activity_main_hint_et_add_task"
+            android:maxLines="1" />
+
+        <Button
+            android:id="@+id/activity_main_btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="AddTask"
+            android:text="@string/activity_main_label_btn_add_task"
+            android:textSize="@dimen/activity_main_font_size_btn" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!-- Activity -->
     <dimen name="activity_main_font_size_app_name">24dp</dimen>
+    <dimen name="activity_main_font_size_btn">18dp</dimen>
 </resources>
