@@ -1,5 +1,6 @@
 package project.yen.yichun.todoapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,12 +19,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    /* Activity */
+    public static final String TASK_NAME = "taskName";
     private final String TAG = MainActivity.class.getSimpleName();
+    private final int ACTIVITY_RESULT = 0;
+    /* Params */
     private ArrayList<String> items = new ArrayList<>();
     private ArrayAdapter<String> itemsAdapter;
+    private String fileName = "todo.txt";
+    private int editedPosition = 0;
+    private String strEditedString = "";
+    /* UI */
     private ListView lvItems;
     private EditText editText;
-    private String fileName = "todo.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,22 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                editedPosition = position;
+                strEditedString = itemsAdapter.getItem(position);
+                launchEditItemActivity(itemsAdapter.getItem(position));
+            }
+        });
+    }
+
+    private void launchEditItemActivity(String taskName) {
+        Intent intent = new Intent();
+        intent.putExtra(TASK_NAME, taskName);
+        intent.setClass(this, EditItemActivity.class);
+        startActivityForResult(intent, ACTIVITY_RESULT);
     }
 
 
@@ -86,6 +110,22 @@ public class MainActivity extends AppCompatActivity {
             FileUtils.writeLines(todoFile, items);
         } catch (IOException e) {
             Log.e(TAG, e.toString());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIVITY_RESULT) {
+            if (resultCode == RESULT_OK) {
+                String strChanges = data.getStringExtra(TASK_NAME);
+                if (strChanges != null && strChanges.length() > 0) {
+                    itemsAdapter.notifyDataSetChanged();
+                    showToast('"' + items.get(editedPosition) + '"'
+                            + " " + getString(R.string.activity_main_msg_edit_item));
+                    writeItems();
+                }
+            }
         }
     }
 

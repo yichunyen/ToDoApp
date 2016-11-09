@@ -3,4 +3,8 @@
     <string name="activity_main_label_btn_add_task">ADD ITEM</string>
     <string name="activity_main_hint_et_add_task">Enter a new item</string>
     <string name="activity_main_msg_remove_item">removed</string>
+    <string name="activity_main_msg_edit_item">edited</string>
+    <string name="activity_edit_item_title">Edit Item</string>
+    <string name="activity_edit_item_label_edit_item_hint">Edit Item Below:</string>
+    <string name="activity_edit_item_btn_save_changes">Save</string>
 </resources>

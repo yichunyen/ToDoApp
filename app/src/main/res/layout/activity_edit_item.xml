@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_edit_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_vertical_margin"
+    tools:context="project.yen.yichun.todoapp.EditItemActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_edit_item_label_edit_item_hint"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/activity_edit_item_font_size_message" />
+
+    <EditText
+        android:id="@+id/activity_edit_item_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/activity_edit_item_btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_edit_item_btn_save_changes"
+        android:onClick="onSave"
+        android:textSize="@dimen/activity_edit_item_font_size_btn" />
+</LinearLayout>
