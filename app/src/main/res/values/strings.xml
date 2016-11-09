@@ -2,4 +2,5 @@
     <string name="app_name">ToDoApp</string>
     <string name="activity_main_label_btn_add_task">ADD ITEM</string>
     <string name="activity_main_hint_et_add_task">Enter a new item</string>
+    <string name="activity_main_msg_remove_item">removed</string>
 </resources>

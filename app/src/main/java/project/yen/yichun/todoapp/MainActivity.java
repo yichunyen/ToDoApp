@@ -9,6 +9,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
@@ -18,10 +19,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
-    private ArrayList<String> items;
+    private ArrayList<String> items = new ArrayList<>();
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
     private EditText editText;
+    private String fileName = "todo.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         readItems();
         lvItems = (ListView) findViewById(R.id.activity_main_list_view);
         editText = (EditText) findViewById(R.id.activity_main_et);
-        items = new ArrayList<>();
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, items);
+        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
         initListener();
     }
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // Tell the user the item was removed from the list permanently.
+                showToast('"' + items.get(position) + '"'
+                        + " " + getString(R.string.activity_main_msg_remove_item));
                 items.remove(position);
                 itemsAdapter.notifyDataSetChanged();
                 writeItems();
@@ -55,14 +59,19 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void onAddItem(View view) {
-        itemsAdapter.add(editText.getText().toString());
-        editText.setText("");
-        writeItems();
+        // Check the input value.
+        String strItem = editText.getText().toString().trim();
+        if (strItem.length() > 0) {
+            itemsAdapter.add(strItem);
+            editText.setText("");
+            lvItems.smoothScrollToPosition(items.size() - 1);
+            writeItems();
+        }
     }
 
     private void readItems() {
         File fileDir = getFilesDir();
-        File todoFile = new File(fileDir, "todo.txt");
+        File todoFile = new File(fileDir, fileName);
         try {
             items = new ArrayList<>(FileUtils.readLines(todoFile));
         } catch (IOException e) {
@@ -72,11 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void writeItems() {
         File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
+        File todoFile = new File(filesDir, fileName);
         try {
             FileUtils.writeLines(todoFile, items);
         } catch (IOException e) {
             Log.e(TAG, e.toString());
         }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 }
