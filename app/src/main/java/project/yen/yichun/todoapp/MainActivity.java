@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String strChanges = data.getStringExtra(TASK_NAME);
                 if (strChanges != null && strChanges.length() > 0) {
+                    items.set(editedPosition, strChanges);
                     itemsAdapter.notifyDataSetChanged();
                     showToast('"' + items.get(editedPosition) + '"'
                             + " " + getString(R.string.activity_main_msg_edit_item));
