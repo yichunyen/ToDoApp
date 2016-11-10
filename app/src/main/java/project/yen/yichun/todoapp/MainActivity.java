@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> itemsAdapter;
     private String fileName = "todo.txt";
     private int editedPosition = 0;
-    private String strEditedString = "";
     /* UI */
     private ListView lvItems;
     private EditText editText;
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 editedPosition = position;
-                strEditedString = itemsAdapter.getItem(position);
                 launchEditItemActivity(itemsAdapter.getItem(position));
             }
         });
